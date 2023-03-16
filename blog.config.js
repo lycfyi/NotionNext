@@ -17,7 +17,7 @@ const BLOG = {
   BIO:
     process.env.NEXT_PUBLIC_BIO ||
     'I love data and solving data problems, in any form. Reader, Builder, Swinging between INTJ and INTP. Currently working on @tldrytb @artflow_ai', // 作者简介
-  LINK: process.env.NEXT_PUBLIC_LINK || 'https://person.fyi', // 网站地址
+  LINK: process.env.NEXT_PUBLIC_LINK || 'https://lyc.fyi', // 网站地址
   KEYWORDS:
     process.env.NEXT_PUBLIC_KEYWORD ||
     'Notion, 博客, Next, AI, buildinpublic, AIGC', // 网站关键词 英文逗号隔开
