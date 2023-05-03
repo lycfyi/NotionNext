@@ -16,7 +16,7 @@ const BLOG = {
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || 'Yucheng L', // 您的昵称 例如 tangly1024
   BIO:
     process.env.NEXT_PUBLIC_BIO ||
-    'I love data and solving data problems, in any form. Reader, Builder, Swinging between INTJ and INTP. Currently working on @tldrytb @artflow_ai', // 作者简介
+    'Reader, Builder, Angel Investor, INTJ, Building @artflow_ai, Accelerating myreader.io', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://lyc.fyi', // 网站地址
   KEYWORDS:
     process.env.NEXT_PUBLIC_KEYWORD ||
