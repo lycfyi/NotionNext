@@ -1,10 +1,11 @@
 const CONFIG_HEXO = {
   HOME_BANNER_ENABLE: true,
   HOME_BANNER_GREETINGS: [
-    'Hi, I am a builder and reader',
-    'Hi, I love AI and Data',
+    'Hi, I solve AI and Data problems',
+    'Hi, I am a Product Engineer',
     'Hi, I am an INTJ-A',
-    'Hi, I am building in public',
+    'Hi, I am an Angel Investor',
+    'Hi, I help accelerating your projects',
     'Welcome 🎉'
   ], // 首页大图标语文字
 
