@@ -41,24 +41,27 @@ const Messenger = dynamic(() => import('@/components/FacebookMessenger'), {
 
 const MyApp = ({ Component, pageProps }) => {
   // 外部插件
-  const externalPlugins = <>
-        {JSON.parse(BLOG.THEME_SWITCH) && <ThemeSwitch />}
-        {JSON.parse(BLOG.DEBUG) && <DebugPanel />}
-        {BLOG.ANALYTICS_ACKEE_TRACKER && <Ackee />}
-        {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
-        {BLOG.ANALYTICS_VERCEL && <Analytics />}
-        {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <Busuanzi />}
-        {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense />}
-        {BLOG.FACEBOOK_APP_ID && BLOG.FACEBOOK_PAGE_ID && <Messenger />}
-        {JSON.parse(BLOG.FIREWORKS) && <Fireworks />}
-        {JSON.parse(BLOG.SAKURA) && <Sakura />}
-        {JSON.parse(BLOG.STARRY_SKY) && <StarrySky />}
-        {JSON.parse(BLOG.MUSIC_PLAYER) && <MusicPlayer />}
-        {JSON.parse(BLOG.NEST) && <Nest />}
-        {JSON.parse(BLOG.FLUTTERINGRIBBON) && <FlutteringRibbon />}
-        {JSON.parse(BLOG.COMMENT_TWIKOO_COUNT_ENABLE) && <TwikooCommentCounter {...pageProps}/>}
-        {JSON.parse(BLOG.RIBBON) && <Ribbon />}
-        <ExternalScript/>
+  const externalPlugins = (
+    <>
+      {JSON.parse(BLOG.THEME_SWITCH) && <ThemeSwitch />}
+      {JSON.parse(BLOG.DEBUG) && <DebugPanel />}
+      {BLOG.ANALYTICS_ACKEE_TRACKER && <Ackee />}
+      {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
+      {BLOG.ANALYTICS_VERCEL && <Analytics />}
+      {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <Busuanzi />}
+      {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense />}
+      {BLOG.FACEBOOK_APP_ID && BLOG.FACEBOOK_PAGE_ID && <Messenger />}
+      {JSON.parse(BLOG.FIREWORKS) && <Fireworks />}
+      {JSON.parse(BLOG.SAKURA) && <Sakura />}
+      {JSON.parse(BLOG.STARRY_SKY) && <StarrySky />}
+      {JSON.parse(BLOG.MUSIC_PLAYER) && <MusicPlayer />}
+      {JSON.parse(BLOG.NEST) && <Nest />}
+      {JSON.parse(BLOG.FLUTTERINGRIBBON) && <FlutteringRibbon />}
+      {JSON.parse(BLOG.COMMENT_TWIKOO_COUNT_ENABLE) && (
+        <TwikooCommentCounter {...pageProps} />
+      )}
+      {JSON.parse(BLOG.RIBBON) && <Ribbon />}
+      <ExternalScript />
     </>
   )
 
@@ -73,7 +76,6 @@ const MyApp = ({ Component, pageProps }) => {
     <GlobalContextProvider>
       <Component {...pageProps} />
       {externalPlugins}
-      <Analytics />
     </GlobalContextProvider>
   )
 }
