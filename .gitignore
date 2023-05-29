@@ -4,7 +4,6 @@
 /node_modules
 /.pnp
 .pnp.js
-.env
 # testing
 /coverage
 
@@ -35,7 +34,6 @@ yarn-error.log*
 
 # dev
 /data.json
-# /yarn.lock
 /pnpm-lock.yaml
 .idea
 .vscode
