@@ -16,7 +16,7 @@ const CONFIG = {
   HERO_TITLE_2: 'Solopreneur Adventure',
   HERO_TITLE_3: 'https://lyc.fyi',
 
-  HERO_TITLE_4: 'My Product',
+  HERO_TITLE_4: '✨ New Product',
   HERO_TITLE_5: 'Create Personalized QR Codes with AI',
   HERO_TITLE_LINK: 'https://getQR.AI',
 
