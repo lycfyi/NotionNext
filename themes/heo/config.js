@@ -98,10 +98,10 @@ const CONFIG = {
   ],
 
   SOCIAL_CARD: true, // 是否显示右侧，点击加入社群按钮
-  SOCIAL_CARD_TITLE_1: '独立开发出海社区',
-  SOCIAL_CARD_TITLE_2: '加入我们的社群讨论分享',
-  SOCIAL_CARD_TITLE_3: '点击加入社群',
-  SOCIAL_CARD_URL: 'link.chuhaiqu.cn/join',
+  SOCIAL_CARD_TITLE_1: '出海去社区',
+  SOCIAL_CARD_TITLE_2: '独立开发者出海首选社群',
+  SOCIAL_CARD_TITLE_3: '点击加入',
+  SOCIAL_CARD_URL: 'https://link.chuhaiqu.cn/join',
 
   // *****  以下配置无效，只是预留开发 ****
   // 菜单配置
