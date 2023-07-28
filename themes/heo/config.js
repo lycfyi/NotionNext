@@ -28,13 +28,13 @@ const CONFIG = {
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   INFOCARD_GREETINGS: [
     'Hi！I am',
-    '🔍 分享与热心帮助',
-    '🤝 专修交互与设计',
-    '🏃 脚踏实地行动派',
-    '🏠 智能家居小能手',
-    '🤖️ 数码科技爱好者',
-    '🧱 团队小组发动机'
+    '🏗️ Building in Public',
+    '💻 Indie Hacker',
+    '🚀 Solopreneur',
+    '🤖️ Big Data & AI Expert',
+    '📚 Lifelong Learner'
   ],
+
   INFO_CARD_URL: 'https://github.com/yucliu/NotionNext', // 个人资料底部按钮链接
 
   // 用户技能图标
