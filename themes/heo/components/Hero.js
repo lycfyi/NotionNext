@@ -379,7 +379,7 @@ function TodayCard({ cRef }) {
           } cursor-pointer today-card-cover absolute w-full h-full top-0`}
           style={{
             background:
-              "url('https://bu.dusays.com/2023/03/12/640dcd3a1b146.png') no-repeat center /cover"
+              "url('https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F214b3c70-e1d8-41da-a501-4d9dddbd65c6%2Fcb6fc506-0b02-4316-954a-672c7afdba1a%2F%25E5%2587%25BA%25E6%25B5%25B7%25E5%258E%25BBLogo%25EF%25BC%2588%25E9%25AB%2598%25E6%25B8%2585%25EF%25BC%2589.jpeg?table=block&id=3ecd7524-f95a-4507-a3a8-30ad86dc0af2') no-repeat center /cover"
           }}
         ></div>
       </div>

@@ -20,8 +20,8 @@ const CONFIG = {
   HERO_TITLE_3: 'https://lyc.fyi',
 
   HERO_TITLE_4: '✨ New Product',
-  HERO_TITLE_5: 'Create Personalized QR Codes with AI',
-  HERO_TITLE_LINK: 'https://getQR.AI',
+  HERO_TITLE_5: '出海去 - 独立开发出海社区',
+  HERO_TITLE_LINK: 'https://link.chuhaiqu.club/lycfyi',
 
   // 英雄区显示三个置顶分类
   HERO_CATEGORY_1: { title: 'Featured', url: '/tag/featured' },
