@@ -106,7 +106,7 @@ export default function Features() {
                     className="w-full"
                     enter="transition ease-in-out duration-700 transform order-first"
                     enterFrom="opacity-0 translate-y-16"
-                    enterTo="opacity-100 translate-y-0"
+                    enterTo="opacity-100"
                     leave="transition ease-in-out duration-300 transform absolute"
                     leaveFrom="opacity-100 translate-y-0"
                     leaveTo="opacity-0 -translate-y-16"
@@ -125,7 +125,7 @@ export default function Features() {
                     className="w-full"
                     enter="transition ease-in-out duration-700 transform order-first"
                     enterFrom="opacity-0 translate-y-16"
-                    enterTo="opacity-100 translate-y-0"
+                    enterTo="opacity-100"
                     leave="transition ease-in-out duration-300 transform absolute"
                     leaveFrom="opacity-100 translate-y-0"
                     leaveTo="opacity-0 -translate-y-16"
@@ -133,8 +133,6 @@ export default function Features() {
                     unmount={false}
                   >
                     <div className="relative inline-flex flex-col">
-                        {/* <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg} width={500} height="462" alt="Features bg" />
-                        <Image className="md:max-w-none absolute w-full left-0 transform animate-float" src={FeaturesElement} width={500} height="44" alt="Element" style={{ top: '30%' }} /> */}
                         <LazyImage src='/images/feature-2.webp'/>
                     </div>
                   </Transition>
@@ -145,7 +143,7 @@ export default function Features() {
                     className="w-full"
                     enter="transition ease-in-out duration-700 transform order-first"
                     enterFrom="opacity-0 translate-y-16"
-                    enterTo="opacity-100 translate-y-0"
+                    enterTo="opacity-100"
                     leave="transition ease-in-out duration-300 transform absolute"
                     leaveFrom="opacity-100 translate-y-0"
                     leaveTo="opacity-0 -translate-y-16"
@@ -153,8 +151,6 @@ export default function Features() {
                     unmount={false}
                   >
                     <div className="relative inline-flex flex-col">
-                      {/* <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg} width={500} height="462" alt="Features bg" />
-                      <Image className="md:max-w-none absolute w-full left-0 transform animate-float" src={FeaturesElement} width={500} height="44" alt="Element" style={{ top: '30%' }} /> */}
                         <LazyImage src='/images/feature-3.webp'/>
                     </div>
                   </Transition>
