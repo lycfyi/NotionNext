@@ -7,7 +7,10 @@ const CONFIG = {
   NOTICE_BAR: [
     { title: 'Welcome to My Solopreneur Adventure', url: 'https://lyc.fyi' },
     { title: 'Create Personalized QR Code with AI', url: 'https://getQR.AI' },
-    { title: '加入独立开发出海社区⛴️', url: 'https://link.chuhaiqu.cn/join' }
+    {
+      title: '加入独立开发出海社区⛴️',
+      url: 'https://link.chuhaiqu.club/lycfyi'
+    }
     // { title: '访问文档中心获取更多帮助', url: 'https://docs.tangly1024.com' }
   ],
 
@@ -105,7 +108,7 @@ const CONFIG = {
   SOCIAL_CARD_TITLE_1: '出海去社区',
   SOCIAL_CARD_TITLE_2: '独立开发者出海首选社群',
   SOCIAL_CARD_TITLE_3: '点击加入',
-  SOCIAL_CARD_URL: 'https://link.chuhaiqu.cn/join',
+  SOCIAL_CARD_URL: 'https://link.chuhaiqu.club/lycfyi',
 
   // *****  以下配置无效，只是预留开发 ****
   // 菜单配置
