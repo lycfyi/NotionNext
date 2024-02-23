@@ -1,8 +1,8 @@
 import { getGlobalData } from '@/lib/notion/getNotionData'
+import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import BLOG from '@/blog.config'
 import { getLayoutByTheme } from '@/themes/theme'
-import { siteConfig } from '@/lib/config'
 
 /**
  * 搜索路由
@@ -10,13 +10,14 @@ import { siteConfig } from '@/lib/config'
  * @returns
  */
 const Search = props => {
-  const { posts } = props
+  const { posts, siteInfo } = props
+  const { locale } = useGlobal()
 
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
+  const Layout = getLayoutByTheme(useRouter())
 
   const router = useRouter()
-  const keyword = router?.query?.s
+  const keyword = getSearchKey(router)
 
   let filteredPosts
   // 静态过滤
@@ -32,7 +33,15 @@ const Search = props => {
     filteredPosts = []
   }
 
-  props = { ...props, posts: filteredPosts }
+  const meta = {
+    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
+    description: siteInfo?.description,
+    image: siteInfo?.pageCover,
+    slug: 'search',
+    type: 'website'
+  }
+
+  props = { ...props, meta, posts: filteredPosts }
 
   return <Layout {...props} />
 }
@@ -51,6 +60,13 @@ export async function getStaticProps() {
     props,
     revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
   }
+}
+
+function getSearchKey(router) {
+  if (router.query && router.query.s) {
+    return router.query.s
+  }
+  return null
 }
 
 export default Search

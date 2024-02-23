@@ -1,9 +1,12 @@
 import CONFIG from './config'
-import { createContext, useContext, useEffect, useRef } from 'react'
+
+import CommonHead from '@/components/CommonHead'
+import { useEffect, useRef } from 'react'
 import Footer from './components/Footer'
 import SideRight from './components/SideRight'
 import TopNav from './components/TopNav'
 import { useGlobal } from '@/lib/global'
+import BLOG from '@/blog.config'
 import { isBrowser } from '@/lib/utils'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
@@ -30,12 +33,6 @@ import SlotBar from './components/SlotBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
-import { siteConfig } from '@/lib/config'
-import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
-
-// 主题全局状态
-const ThemeGlobalHexo = createContext()
-export const useHexoGlobal = () => useContext(ThemeGlobalHexo)
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -44,36 +41,13 @@ export const useHexoGlobal = () => useContext(ThemeGlobalHexo)
  * @constructor
  */
 const LayoutBase = props => {
-  const { post, children, slotTop, className } = props
-  const { onLoading, fullWidth } = useGlobal()
-
-  const router = useRouter()
-  const headerSlot = post
-    ? <PostHeader {...props} />
-    : (router.route === '/' && siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG)
-        ? <Hero {...props} />
-        : null)
-
-  const drawerRight = useRef(null)
-  const tocRef = isBrowser ? document.getElementById('article-wrapper') : null
-
-  const floatSlot = <>
-        {post?.toc?.length > 1 && <div className="block lg:hidden">
-            <TocDrawerButton
-                onClick={() => {
-                  drawerRight?.current?.handleSwitchVisible()
-                }}
-            />
-        </div>}
-        <JumpToCommentButton />
-    </>
-
-  // Algolia搜索框
-  const searchModal = useRef(null)
+  const { children, headerSlot, floatSlot, slotTop, meta, siteInfo, className } = props
+  const { onLoading } = useGlobal()
 
   return (
-    <ThemeGlobalHexo.Provider value={{ searchModal }}>
-        <div id='theme-hexo' className={`${siteConfig('FONT_STYLE')} dark:bg-black scroll-smooth`}>
+        <div id='theme-hexo'>
+            {/* 网页SEO */}
+            <CommonHead meta={meta}/>
             <Style/>
 
             {/* 顶部导航 */}
@@ -95,9 +69,9 @@ const LayoutBase = props => {
             </Transition>
 
             {/* 主区块 */}
-            <main id="wrapper" className={`${siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG) ? '' : 'pt-16'} bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative`}>
-                <div id="container-inner" className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
-                    <div className={`${className || ''} w-full ${fullWidth ? '' : 'max-w-4xl'} h-full overflow-hidden`}>
+            <main id="wrapper" className={`${CONFIG.HOME_BANNER_ENABLE ? '' : 'pt-16'} bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative`}>
+                <div id="container-inner" className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
+                    <div className={`${className || ''} w-full max-w-4xl h-full overflow-hidden`}>
 
                         <Transition
                             show={!onLoading}
@@ -118,24 +92,16 @@ const LayoutBase = props => {
                     </div>
 
                     {/* 右侧栏 */}
-                    <SideRight {...props} className={`space-y-4 lg:w-80 pt-4 ${post ? 'lg:pt-0' : 'lg:pt-4'}`} />
+                    <SideRight {...props} />
                 </div>
             </main>
-
-            <div className='block lg:hidden'>
-              <TocDrawer post={post} cRef={drawerRight} targetRef={tocRef} />
-            </div>
 
             {/* 悬浮菜单 */}
             <RightFloatArea floatSlot={floatSlot} />
 
-            {/* 全文搜索 */}
-            <AlgoliaSearchModal cRef={searchModal} {...props}/>
-
             {/* 页脚 */}
-            <Footer title={siteConfig('TITLE') } />
+            <Footer title={siteInfo?.title || BLOG.TITLE} />
         </div>
-    </ThemeGlobalHexo.Provider>
   )
 }
 
@@ -146,7 +112,8 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  return <LayoutPostList {...props} className='pt-8' />
+  const headerSlot = CONFIG.HOME_BANNER_ENABLE && <Hero {...props} />
+  return <LayoutPostList {...props} headerSlot={headerSlot} className='pt-8' />
 }
 
 /**
@@ -155,10 +122,10 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutPostList = (props) => {
-  return <div className='pt-8'>
+  return <LayoutBase {...props} className='pt-8'>
         <SlotBar {...props} />
-        {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
-    </div>
+        {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+    </LayoutBase>
 }
 
 /**
@@ -185,11 +152,11 @@ const LayoutSearch = props => {
   })
 
   return (
-        <div className='pt-8'>
+        <LayoutBase {...props} currentSearch={currentSearch} className='pt-8'>
             {!currentSearch
               ? <SearchNav {...props} />
-              : <div id="posts-wrapper"> {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}  </div>}
-        </div>
+              : <div id="posts-wrapper"> {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}  </div>}
+        </LayoutBase>
   )
 }
 
@@ -200,7 +167,7 @@ const LayoutSearch = props => {
  */
 const LayoutArchive = (props) => {
   const { archivePosts } = props
-  return <div className='pt-8'>
+  return <LayoutBase {...props} className='pt-8'>
         <Card className='w-full'>
             <div className="mb-10 pb-20 bg-white md:p-12 p-3 min-h-full dark:bg-hexo-black-gray">
                 {Object.keys(archivePosts).map(archiveTitle => (
@@ -212,7 +179,7 @@ const LayoutArchive = (props) => {
                 ))}
             </div>
         </Card>
-    </div>
+    </LayoutBase>
 }
 
 /**
@@ -222,9 +189,23 @@ const LayoutArchive = (props) => {
  */
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
+  const drawerRight = useRef(null)
+
+  const targetRef = isBrowser ? document.getElementById('article-wrapper') : null
+
+  const floatSlot = <>
+        {post?.toc?.length > 1 && <div className="block lg:hidden">
+            <TocDrawerButton
+                onClick={() => {
+                  drawerRight?.current?.handleSwitchVisible()
+                }}
+            />
+        </div>}
+        <JumpToCommentButton />
+    </>
 
   return (
-        <>
+        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} floatSlot={floatSlot} >
             <div className="w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article">
                 {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -255,7 +236,11 @@ const LayoutSlug = props => {
                 </div>}
             </div>
 
-        </>
+            <div className='block lg:hidden'>
+                <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
+            </div>
+
+        </LayoutBase>
   )
 }
 
@@ -280,7 +265,7 @@ const Layout404 = props => {
     }, 3000)
   })
   return (
-        <>
+        <LayoutBase {...props}>
             <div className="text-black w-full h-screen text-center justify-center content-center items-center flex flex-col">
                 <div className="dark:text-gray-200">
                     <h2 className="inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top">
@@ -291,7 +276,7 @@ const Layout404 = props => {
                     </div>
                 </div>
             </div>
-        </>
+        </LayoutBase>
   )
 }
 
@@ -304,13 +289,13 @@ const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
   return (
-        <div className='mt-8'>
+        <LayoutBase {...props} className='mt-8'>
             <Card className="w-full min-h-screen">
                 <div className="dark:text-gray-200 mb-5 mx-3">
                     <i className="mr-4 fas fa-th" />  {locale.COMMON.CATEGORY}:
                 </div>
                 <div id="category-list" className="duration-200 flex flex-wrap mx-8">
-                    {categoryOptions?.map(category => {
+                    {categoryOptions.map(category => {
                       return (
                             <Link key={category.name} href={`/category/${category.name}`} passHref legacyBehavior>
                                 <div className={' duration-300 dark:hover:text-white px-5 cursor-pointer py-2 hover:text-indigo-400'}>
@@ -321,7 +306,7 @@ const LayoutCategoryIndex = props => {
                     })}
                 </div>
             </Card>
-        </div>
+        </LayoutBase>
   )
 }
 
@@ -334,7 +319,7 @@ const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
   return (
-        <div className='mt-8'>
+        <LayoutBase {...props} className='mt-8'>
             <Card className='w-full'>
                 <div className="dark:text-gray-200 mb-5 ml-4">
                     <i className="mr-4 fas fa-tag" /> {locale.COMMON.TAGS}:
@@ -345,13 +330,12 @@ const LayoutTagIndex = props => {
                     </div>)}
                 </div>
             </Card>
-        </div>
+        </LayoutBase>
   )
 }
 
 export {
   CONFIG as THEME_CONFIG,
-  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,

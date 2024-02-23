@@ -1,49 +1,35 @@
-import { siteConfig } from '@/lib/config'
+import BLOG from '@/blog.config'
 import Link from 'next/link'
 import TagItemMini from './TagItemMini'
-import CONFIG from '../config'
+import React from 'react'
+import CONFIG_FUKA from '../config'
 import LazyImage from '@/components/LazyImage'
-import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
-import NotionIcon from '@/components/NotionIcon'
 
-/**
- * 文章列表卡片
- * @param {*} param0
- * @returns
- */
 const BlogCard = ({ index, post, showSummary, siteInfo }) => {
-  const showPreview = siteConfig('FUKASAWA_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
+  const showPreview = CONFIG_FUKA.POST_LIST_PREVIEW && post.blockMap
   // fukasawa 强制显示图片
-  if (siteConfig('FUKASAWA_POST_LIST_COVER_FORCE', null, CONFIG) && post && !post.pageCover) {
+  if (CONFIG_FUKA.POST_LIST_COVER_FORCE && post && !post.pageCover) {
     post.pageCoverThumbnail = siteInfo?.pageCover
   }
-  const showPageCover = siteConfig('FUKASAWA_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail
-  const FUKASAWA_POST_LIST_ANIMATION = siteConfig('FUKASAWA_POST_LIST_ANIMATION', null, CONFIG)
-
-  // 动画样式  首屏卡片不用，后面翻出来的加动画
-  const aosProps = FUKASAWA_POST_LIST_ANIMATION
-    ? {
-        'data-aos': 'fade-up',
-        'data-aos-duration': '300',
-        'data-aos-once': 'true',
-        'data-aos-anchor-placement': 'top-bottom'
-      }
-    : {}
-
-  const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
+  const showPageCover = CONFIG_FUKA.POST_LIST_COVER && post?.pageCoverThumbnail
 
   return (
-        <article {...aosProps} style={{ maxHeight: '60rem' }}
+        <div
+            data-aos="fade-up"
+            data-aos-duration="600"
+            data-aos-once="true"
+            data-aos-anchor-placement="top-bottom"
+            style={{ maxHeight: '60rem' }}
             className="w-full lg:max-w-sm p-3 shadow mb-4 mx-2 bg-white dark:bg-hexo-black-gray hover:shadow-lg duration-200"
         >
             <div className="flex flex-col justify-between h-full">
                 {/* 封面图 */}
                 {showPageCover && (
                     <div className="flex-grow mb-3 w-full duration-200 cursor-pointer transform overflow-hidden">
-                        <Link href={url} passHref legacyBehavior>
+                        <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
                             <LazyImage
                                 src={post?.pageCoverThumbnail}
-                                alt={post?.title || siteConfig('TITLE')}
+                                alt={post?.title || BLOG.TITLE}
                                 className="object-cover w-full h-full hover:scale-125 transform duration-500"
                             />
                         </Link>
@@ -52,18 +38,16 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
 
                 {/* 文字部分 */}
                 <div className="flex flex-col w-full">
-                    <h2>
-                        <Link passHref href={url}
-                            className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}
-                        >
-                        <NotionIcon icon={post.pageIcon} /> {post.title}
-                        </Link>
-                    </h2>
+                    <Link passHref href={`${BLOG.SUB_PATH}/${post.slug}`}
+                         className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}
+                    >
+                        {post.title}
+                    </Link>
 
                     {(!showPreview || showSummary) && (
-                        <main className="my-2 tracking-wide line-clamp-3 text-gray-800 dark:text-gray-300 text-md font-light leading-6">
+                        <p className="my-2 tracking-wide line-clamp-3 text-gray-800 dark:text-gray-300 text-md font-light leading-6">
                             {post.summary}
-                        </main>
+                        </p>
                     )}
 
                     {/* 分类标签 */}
@@ -78,7 +62,8 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
                         </Link>}
                         <div className="md:flex-nowrap flex-wrap md:justify-start inline-block">
                             <div>
-                                {post.tagItems?.map((tag) => (
+
+                                {post.tagItems.map((tag) => (
                                     <TagItemMini key={tag.name} tag={tag} />
                                 ))}
                             </div>
@@ -86,7 +71,7 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
                     </div>
                 </div>
             </div>
-        </article>
+        </div>
   )
 }
 

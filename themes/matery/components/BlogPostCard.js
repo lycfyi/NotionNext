@@ -1,23 +1,21 @@
-import { siteConfig } from '@/lib/config'
+import BLOG from '@/blog.config'
 import Link from 'next/link'
+import React from 'react'
 import TagItemMini from './TagItemMini'
 import CONFIG from '../config'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import LazyImage from '@/components/LazyImage'
 import { formatDateFmt } from '@/lib/formatDate'
-import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
-import NotionIcon from '@/components/NotionIcon'
+// import Image from 'next/image'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
-  const showPreview = siteConfig('MATERY_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
+  const showPreview = CONFIG.POST_LIST_PREVIEW && post.blockMap
   // matery 主题默认强制显示图片
   if (post && !post.pageCoverThumbnail) {
     post.pageCoverThumbnail = siteInfo?.pageCover
   }
-  const showPageCover = siteConfig('MATERY_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail
+  const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail
   const delay = (index % 3) * 300
-  const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
-
   return (
         <div
             data-aos="zoom-in"
@@ -28,26 +26,24 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
             className="w-full mb-4 overflow-hidden shadow-md border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray">
 
             {/* 固定高度 ，空白用图片拉升填充 */}
-            <header className="group flex flex-col h-80 justify-between">
+            <div className="group flex flex-col h-80 justify-between">
 
                 {/* 头部图片 填充卡片 */}
                 {showPageCover && (
-                    <Link href={url} passHref legacyBehavior>
+                    <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
                         <div className="flex flex-grow w-full relative duration-200 = rounded-t-md cursor-pointer transform overflow-hidden">
                             <LazyImage
                                 src={post?.pageCoverThumbnail}
                                 alt={post.title}
                                 className="h-full w-full group-hover:scale-125 group-hover:brightness-50 brightness-90 rounded-t-md transform object-cover duration-500"
                             />
-                            <h2 className='absolute bottom-0 left-0 text-white p-6 text-2xl replace break-words w-full shadow-text'>
-                                <NotionIcon icon={post.pageIcon} />{post.title}
-                            </h2>
+                            <div className='absolute bottom-0 left-0 text-white p-6 text-2xl replace break-words w-full shadow-text'>{post.title}</div>
                         </div>
                     </Link>
                 )}
 
                 {/* 文字描述 */}
-                <main >
+                <div >
                     {/* 描述 */}
                     <div className="px-4 flex flex-col w-full  text-gray-700  dark:text-gray-300">
 
@@ -96,8 +92,8 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                             </div>
                         </div>
                     </>)}
-                </main>
-            </header>
+                </div>
+            </div>
 
         </div>
   )

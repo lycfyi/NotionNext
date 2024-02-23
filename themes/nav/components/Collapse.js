@@ -1,4 +1,4 @@
-import { useEffect, useImperativeHandle, useRef } from 'react'
+import React, { useEffect, useImperativeHandle } from 'react'
 
 /**
  * 折叠面板组件，支持水平折叠、垂直折叠
@@ -7,7 +7,7 @@ import { useEffect, useImperativeHandle, useRef } from 'react'
  */
 const Collapse = props => {
   const { collapseRef } = props
-  const ref = useRef(null)
+  const ref = React.useRef(null)
   const type = props.type || 'vertical'
 
   useImperativeHandle(collapseRef, () => {

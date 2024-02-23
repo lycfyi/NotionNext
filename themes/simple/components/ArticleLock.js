@@ -8,7 +8,7 @@ import { useEffect, useRef } from 'react'
  * @param validPassword(bool) 回调函数，校验正确回调入参为true
  * @returns
  */
-export default function ArticleLock (props) {
+export const ArticleLock = props => {
   const { validPassword } = props
   const { locale } = useGlobal()
 
@@ -28,7 +28,7 @@ export default function ArticleLock (props) {
     passwordInputRef.current.focus()
   }, [])
 
-  return <div id='container' className='w-full flex justify-center items-center h-96 '>
+  return <div id='container' className='w-full flex justify-center items-center h-96 font-sans'>
         <div className='text-center space-y-3'>
             <div className='font-bold'>{locale.COMMON.ARTICLE_LOCK_TIPS}</div>
             <div className='flex mx-4'>

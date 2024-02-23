@@ -1,7 +1,6 @@
+import BLOG from '@/blog.config'
 import LazyImage from '@/components/LazyImage'
-import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
-import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 
 /**
  * 最新文章列表
@@ -19,12 +18,11 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
   return <div className='grid grid-cols-2 gap-4'>
         {latestPosts.map(post => {
           const headerImage = post?.pageCoverThumbnail ? post.pageCoverThumbnail : siteInfo?.pageCover
-          const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
 
           return (
             (<Link key={post.id} passHref
                     title={post.title}
-                    href={url}
+                    href={`${BLOG.SUB_PATH}/${post.slug}`}
 
                     className={'my-3 flex flex-col w-full'}>
 

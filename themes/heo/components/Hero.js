@@ -1,7 +1,8 @@
 // import Image from 'next/image'
+
+import BLOG from '@/blog.config'
 import { ArrowSmallRight, PlusSmall } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
-import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
@@ -15,7 +16,6 @@ import CONFIG from '../config'
  * @returns
  */
 const Hero = props => {
-  const HEO_HERO_REVERSE = siteConfig('HEO_HERO_REVERSE', false, CONFIG)
   return (
     <div
       id="hero-wrapper"
@@ -25,16 +25,11 @@ const Hero = props => {
         id="hero"
         style={{ zIndex: 1 }}
         className={
-           `animate__animated animate__fadeIn animate__fast 
-           ${HEO_HERO_REVERSE ? 'xl:flex-row-reverse' : ''}
-           recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative`
+          'animate__animated animate__fadeIn animate__fast recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex xl:space-x-3 relative'
         }
       >
         {/* 左侧banner组 */}
         <BannerGroup {...props} />
-
-        {/* 中间留白 */}
-        <div className='px-1.5 h-full'></div>
 
         {/* 右侧置顶文章组 */}
         <TopGroup {...props} />
@@ -75,7 +70,7 @@ function Banner(props) {
   function handleClickBanner() {
     const randomIndex = Math.floor(Math.random() * latestPosts.length)
     const randomPost = latestPosts[randomIndex]
-    router.push(`${siteConfig('SUB_PATH', '')}/${randomPost?.slug}`)
+    router.push(`${BLOG.SUB_PATH}/${randomPost?.slug}`)
   }
 
   return (
@@ -86,12 +81,12 @@ function Banner(props) {
     >
       <div id="banner-title" className="flex flex-col absolute top-10 left-10">
         <div className="text-4xl font-bold mb-3  dark:text-white">
-          {siteConfig('HEO_HERO_TITLE_1', null, CONFIG)}
+          {CONFIG.HERO_TITLE_1}
           <br />
-          {siteConfig('HEO_HERO_TITLE_2', null, CONFIG)}
+          {CONFIG.HERO_TITLE_2}
         </div>
         <div className="text-xs text-gray-600  dark:text-gray-200">
-          {siteConfig('HEO_HERO_TITLE_3', null, CONFIG)}
+          {CONFIG.HERO_TITLE_3}
         </div>
       </div>
 
@@ -122,7 +117,7 @@ function Banner(props) {
  * 英雄区左上角banner条中斜向滚动的图标
  */
 function TagsGroupBar() {
-  const groupIcons = siteConfig('HEO_GROUP_ICONS', null, CONFIG).concat(siteConfig('HEO_GROUP_ICONS', null, CONFIG))
+  const groupIcons = CONFIG.GROUP_ICONS.concat(CONFIG.GROUP_ICONS)
 
   return (
     <div className="tags-group-all flex -rotate-[30deg] h-full">
@@ -172,11 +167,11 @@ function GroupMenu() {
   return (
     <div className="h-[165px] select-none xl:h-20 flex flex-col justify-between xl:space-y-0 xl:flex-row w-28 lg:w-48 xl:w-full xl:flex-nowrap xl:space-x-3">
       <Link
-        href={siteConfig('HEO_HERO_CATEGORY_1', null, CONFIG)?.url}
+        href={CONFIG.HERO_CATEGORY_1?.url}
         className="group relative overflow-hidden bg-gradient-to-r from-blue-500 to-blue-400 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in"
       >
         <div className="font-bold lg:text-lg  pl-5 relative -mt-2">
-          {siteConfig('HEO_HERO_CATEGORY_1', null, CONFIG)?.title}
+          {CONFIG.HERO_CATEGORY_1?.title}
           <span className="absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full"></span>
         </div>
         <div className="hidden lg:block absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0">
@@ -184,11 +179,11 @@ function GroupMenu() {
         </div>
       </Link>
       <Link
-        href={siteConfig('HEO_HERO_CATEGORY_2', null, CONFIG)?.url}
+        href={CONFIG.HERO_CATEGORY_2?.url}
         className="group relative overflow-hidden bg-gradient-to-r from-red-500 to-yellow-500 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in"
       >
         <div className="font-bold lg:text-lg pl-5 relative -mt-2">
-          {siteConfig('HEO_HERO_CATEGORY_2', null, CONFIG)?.title}
+          {CONFIG.HERO_CATEGORY_2?.title}
           <span className="absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full"></span>
         </div>
         <div className="hidden lg:block absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0">
@@ -197,11 +192,11 @@ function GroupMenu() {
       </Link>
       {/* 第三个标签在小屏上不显示 */}
       <Link
-        href={siteConfig('HEO_HERO_CATEGORY_3', null, CONFIG)?.url}
+        href={CONFIG.HERO_CATEGORY_3?.url}
         className="group relative overflow-hidden bg-gradient-to-r from-teal-300 to-cyan-300 hidden h-20 xl:flex justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in"
       >
         <div className="font-bold text-lg pl-5 relative -mt-2">
-          {siteConfig('HEO_HERO_CATEGORY_3', null, CONFIG)?.title}
+          {CONFIG.HERO_CATEGORY_3?.title}
           <span className="absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full"></span>
         </div>
         <div className="absolute right-6 duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0">
@@ -238,7 +233,7 @@ function TopGroup(props) {
       >
         {topPosts?.map((p, index) => {
           return (
-            <Link href={`${siteConfig('SUB_PATH', '')}/${p?.slug}`} key={index}>
+            <Link href={`${BLOG.SUB_PATH}/${p?.slug}`} key={index}>
               <div className="cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-black dark:text-white rounded-xl">
                 <LazyImage
                   priority={index === 0}
@@ -258,7 +253,7 @@ function TopGroup(props) {
           )
         })}
       </div>
-      <TodayCard cRef={todayCardRef} siteInfo={siteInfo}/>
+      <TodayCard cRef={todayCardRef} />
     </div>
   )
 }
@@ -269,8 +264,8 @@ function TopGroup(props) {
 function getTopPosts({ latestPosts, allNavPages }) {
   // 默认展示最近更新
   if (
-    !siteConfig('HEO_HERO_RECOMMEND_POST_TAG', null, CONFIG) ||
-    siteConfig('HEO_HERO_RECOMMEND_POST_TAG', null, CONFIG) === ''
+    !CONFIG.HERO_RECOMMEND_POST_TAG ||
+    CONFIG.HERO_RECOMMEND_POST_TAG === ''
   ) {
     return latestPosts
   }
@@ -279,7 +274,7 @@ function getTopPosts({ latestPosts, allNavPages }) {
   let sortPosts = []
 
   // 排序方式
-  if (JSON.parse(siteConfig('HEO_HERO_RECOMMEND_POST_SORT_BY_UPDATE_TIME', null, CONFIG))) {
+  if (JSON.parse(CONFIG.HERO_RECOMMEND_POST_SORT_BY_UPDATE_TIME)) {
     sortPosts = Object.create(allNavPages).sort((a, b) => {
       const dateA = new Date(a?.lastEditedDate)
       const dateB = new Date(b?.lastEditedDate)
@@ -295,7 +290,7 @@ function getTopPosts({ latestPosts, allNavPages }) {
       break
     }
     // 查找标签
-    if (post?.tags?.indexOf(siteConfig('HEO_HERO_RECOMMEND_POST_TAG', null, CONFIG)) >= 0) {
+    if (post?.tags?.indexOf(CONFIG.HERO_RECOMMEND_POST_TAG) >= 0) {
       topPosts.push(post)
     }
   }
@@ -306,7 +301,7 @@ function getTopPosts({ latestPosts, allNavPages }) {
  * 英雄区右侧，今日卡牌
  * @returns
  */
-function TodayCard({ cRef, siteInfo }) {
+function TodayCard({ cRef }) {
   const router = useRouter()
   // 卡牌是否盖住下层
   const [isCoverUp, setIsCoverUp] = useState(true)
@@ -336,7 +331,7 @@ function TodayCard({ cRef, siteInfo }) {
    * @param {*} e
    */
   function handleCardClick(e) {
-    router.push(siteConfig('HEO_HERO_TITLE_LINK', null, CONFIG))
+    router.push(CONFIG.HERO_TITLE_LINK)
   }
 
   return (
@@ -360,8 +355,8 @@ function TodayCard({ cRef, siteInfo }) {
           className="z-10 flex justify-between w-full relative text-white p-10 items-end"
         >
           <div className="flex flex-col">
-            <div className="text-xs font-light">{siteConfig('HEO_HERO_TITLE_4', null, CONFIG)}</div>
-            <div className="text-3xl font-bold">{siteConfig('HEO_HERO_TITLE_5', null, CONFIG)}</div>
+            <div className="text-xs font-light">{CONFIG.HERO_TITLE_4}</div>
+            <div className="text-3xl font-bold">{CONFIG.HERO_TITLE_5}</div>
           </div>
           <div
             onClick={handleClickMore}
@@ -383,7 +378,8 @@ function TodayCard({ cRef, siteInfo }) {
             isCoverUp ? '' : ' pointer-events-none'
           } cursor-pointer today-card-cover absolute w-full h-full top-0`}
           style={{
-            background: `url('${siteInfo?.pageCover}') no-repeat center /cover`
+            background:
+              "url('https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F214b3c70-e1d8-41da-a501-4d9dddbd65c6%2Fcb6fc506-0b02-4316-954a-672c7afdba1a%2F%25E5%2587%25BA%25E6%25B5%25B7%25E5%258E%25BBLogo%25EF%25BC%2588%25E9%25AB%2598%25E6%25B8%2585%25EF%25BC%2589.jpeg?table=block&id=3ecd7524-f95a-4507-a3a8-30ad86dc0af2') no-repeat center /cover"
           }}
         ></div>
       </div>

@@ -1,14 +1,13 @@
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true'
+})
+
 const { THEME } = require('./blog.config')
 const fs = require('fs')
 const path = require('path')
-const BLOG = require('./blog.config')
-
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: BLOG.BUNDLE_ANALYZER
-})
 
 /**
- * 扫描指定目录下的文件夹名，用于获取所有主题
+ * 扫描指定目录下的文件夹名，用于获取当前有几个主题
  * @param {*} directory
  * @returns
  */
@@ -18,11 +17,11 @@ function scanSubdirectories(directory) {
   fs.readdirSync(directory).forEach(file => {
     const fullPath = path.join(directory, file)
     const stats = fs.statSync(fullPath)
-    if (stats.isDirectory()) {
+
+    // landing主题比较特殊，不在可切换的主题中显示
+    if (stats.isDirectory() && file !== 'landing') {
       subdirectories.push(file)
     }
-
-    // subdirectories.push(file)
   })
 
   return subdirectories
@@ -41,8 +40,7 @@ module.exports = withBundleAnalyzer({
       'images.unsplash.com',
       'source.unsplash.com',
       'p1.qhimg.com',
-      'webmention.io',
-      'ko-fi.com'
+      'webmention.io'
     ]
   },
   // 默认将feed重定向至 /public/rss/feed.xml
@@ -93,9 +91,6 @@ module.exports = withBundleAnalyzer({
     //   })
     // }
     // 动态主题：添加 resolve.alias 配置，将动态路径映射到实际路径
-    if (!isServer) {
-      console.log('[加载主题]', path.resolve(__dirname, 'themes', THEME))
-    }
     config.resolve.alias['@theme-components'] = path.resolve(__dirname, 'themes', THEME)
     return config
   },
