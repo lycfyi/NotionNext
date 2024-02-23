@@ -13,7 +13,7 @@ const CONFIG = {
     },
     {
       title: 'Incubator for Super-individuals',
-      url: 'https://velocity1.co',
+      url: 'https://velocity1.co'
     }
     // { title: '访问文档中心获取更多帮助', url: 'https://docs.tangly1024.com' }
   ],
